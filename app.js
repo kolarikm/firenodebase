@@ -21,6 +21,27 @@ router.get('/', (req, res) => {
     console.log("GET request received");
 });
 
+router.get('/words', async (req, res) => {
+    console.log("[log] - " + new Date().toLocaleString() + " - GET /words/ request received");
+
+    const wordSnap = await db.ref(`words/`).once('value');
+
+    const response = Object.assign({}, wordSnap.val());
+
+    res.json(response);
+});
+
+router.get('/words', async (req, res) => {
+    const {user} = req.query;
+    console.log("[log] - " + new Date().toLocaleString() + " - GET /words/" + user + " request received");
+
+    const wordSnap = await db.ref(`words/${user}`).once('value');
+
+    const response = Object.assign({}, wordSnap.val());
+
+    res.json(response);
+});
+
 router.post('/words', (req, res) => {
     const {name, word} = req.body;
     db.ref(`words/${name}`).push({word});
