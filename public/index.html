@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+
+    <body>
+        <div id = "app">
+            <h1 id="title">Hello from Express!</h1>
+            <table>
+                <tr id = "name">
+                    <td id = "blah">
+                        <input type = "button" id="button" onclick = "getData()">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+
+    <script type="text/javascript">
+        var getData = function() {
+            const row = document.getElementById("name");
+
+            const header = new Headers();
+            header.append('Content-Type', 'application/json');
+
+            fetch('/', {
+                method: 'GET',
+                headers: header,
+                cache: 'default'
+            })
+            .then(function(data) {
+                data.json()
+                .then(function(data) {
+                    const title = document.getElementById('title');
+                    title.innerText = data.title;
+
+                    const button = document.getElementById('button');
+                    button.value = ':-)'
+                })
+            })
+            .catch(function(error) {
+                console.log("Error!");
+            });
+
+        }
+    </script>
+</html>
