@@ -31,8 +31,9 @@ router.get('/words', async (req, res) => {
     res.json(response);
 });
 
-router.get('/words', async (req, res) => {
-    const {user} = req.query;
+router.get('/words/:user', async (req, res) => {
+    const {user} = req.params;
+    console.log(req.params);
     console.log("[log] - " + new Date().toLocaleString() + " - GET /words/" + user + " request received");
 
     const wordSnap = await db.ref(`words/${user}`).once('value');
